@@ -19,6 +19,14 @@ export async function getServerSideProps() {
     });
   
     const story = response.choices[0].message.content;
+
+    const imageResponse = async function generateImage(prompt, animal) {
+      const image = await openai.images.generate({
+          model: "dall-e-3", 
+          prompt: `${prompt} in the style of a children's book illustration. The main character of the image is a ${animal}`,
+      });
+      return image.data[0].url;
+  }
   
     if (!story) {
       return {
