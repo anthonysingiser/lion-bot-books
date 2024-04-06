@@ -1,5 +1,6 @@
 import {openai} from '../projectKey'
 import {animals, firstTenFryWords} from '../data';
+import Image from 'next/image';
 
 export async function getServerSideProps() {
 
@@ -7,7 +8,7 @@ export async function getServerSideProps() {
 
     async function createStory(choiceWords: string[], mainCharacter: string): Promise<string>{
       const response = await openai.chat.completions.create({
-        messages: [{ role: 'user', content: `create ten sentences that use these words:${firstTenFryWords}. make the sentences primarily made from these words. each sentence will be slight variations on the first sentence generated. The sentences together will tell a story focusing on the thoughts and feelings of a ${mainCharacter}. The story needs a central conflict, that is resolved by the end.`}],
+        messages: [{ role: 'user', content: `create ten sentences that use these words:${choiceWords}. make the sentences primarily made from these words. each sentence will be slight variations on the first sentence generated. The sentences together will tell a story focusing on the thoughts and feelings of a ${mainCharacter}. The story needs a central conflict, that is resolved by the end.`}],
         model: 'gpt-3.5-turbo',
       });
 
@@ -47,21 +48,21 @@ export async function getServerSideProps() {
       }
     }
 
-   createBook().then((book) => {
-      {
-        props: {
-          story: book.story,
-          image: book.image
-        }
-      }
-    })
+    try {
+      const book = await createBook();
+      return { props: { story: book.story, image: book.image } };
+    } catch (error) {
+      console.error(error);
+      return { props: { story: '', image: '' } };
+    }
 }
 
-export default function Home({ story }: { story: string }) {
+export default function Home({ story, image }: { story: string, image: string }) {
   return (
     <div>
       <h1>Index.tsx</h1>
       <p>{story}</p>
+      <Image src={image} alt="book illustration" width={500} height={300}/>
     </div>
   );
 }
