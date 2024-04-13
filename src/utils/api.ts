@@ -35,7 +35,7 @@ async function generateImage(prompt: string, animal: string): Promise<string> {
   }
 }
 
-export default async function createBook(): Promise<{story: string, image: string}> {
+export default async function createBook(): Promise<{story: string, image: string}[]> {
   try {
     let storyArray: string[] = [];
     const story = await createStory(firstTenFryWords, mainCharacter);
@@ -43,8 +43,13 @@ export default async function createBook(): Promise<{story: string, image: strin
       return !/[0-9\n]/.test(sentence);
     });
 
-    const image = await generateImage(storyArray[0], mainCharacter);
-    return {story: storyArray[0], image: image};
+    const book = [];
+    for (const sentence of storyArray) {
+      const image = await generateImage(sentence, mainCharacter);
+      book.push({story: sentence, image: image});
+    }
+
+    return book;
   } catch (error) {
     console.error("Error creating book: ", error);
     throw error;
