@@ -16,7 +16,13 @@ async function createStory(choiceWords: string[], mainCharacter: string): Promis
   }
 }
 
+function delay(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 async function generateImage(prompt: string, animal: string): Promise<string> {
+  await delay(12000); // Wait for 12 seconds
+
   const image = await openai.images.generate({
       model: "dall-e-3", 
       prompt: `${prompt} in the style of a children's book illustration. The main character of the image is a ${animal}`,
