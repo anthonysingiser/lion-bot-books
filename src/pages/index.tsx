@@ -16,17 +16,23 @@ export async function getServerSideProps() {
 export default function Home({ book }: { book: { story: string, image: string }[] }) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const handleClick = () => {
+  const handleNextClick = () => {
     if (currentIndex < book.length - 1) {
       setCurrentIndex(currentIndex + 1);
     }
   };
+  const handleBackClick = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex(currentIndex - 1);
+    }
+  }
 
   return (
     <div>
       <Image src={book[currentIndex].image} alt="book illustration" width={600} height={400}/>
       <h2>{book[currentIndex].story}.</h2>
-      <button onClick={handleClick}>Next</button>
+      <button onClick={handleNextClick}>Next</button>
+      <button onClick={handleBackClick}>Back</button>
     </div>
   );
 }
