@@ -25,7 +25,7 @@ async function generateImage(prompt: string, animal: string): Promise<string> {
 
   const image = await openai.images.generate({
       model: "dall-e-3", 
-      prompt: `${prompt} in the style of a children's book illustration, with no text. The main character of the image is a ${animal}`,
+      prompt: `${prompt} in a hand-drawn style with muted primary and secondary colors. The main character of the image is a ${animal}`,
   });
 
   if (image.data[0]?.url) {
