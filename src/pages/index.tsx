@@ -50,7 +50,7 @@ export default function Home({ book }: { book: { story: string, image: string }[
           className="mx-2 py-2 px-4 bg-blue-500 text-white rounded"
           onClick={handleBackClick}
         >
-          Back
+          &#8592; {/* Left arrow symbol */}
         </button>
         <Image
           src={book[currentIndex].image}
@@ -62,7 +62,7 @@ export default function Home({ book }: { book: { story: string, image: string }[
           className="mx-2 py-2 px-4 bg-blue-500 text-white rounded"
           onClick={handleNextClick}
         >
-          Next
+          &#8594; {/* Right arrow symbol */}
         </button>
       </div>
       <h2 className="text-4xl text-center font-bold text-blue-500 mt-8">
