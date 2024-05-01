@@ -1,6 +1,8 @@
-import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import createBook from '../utils/api';
+import Loading from '../components/Loading';
+import Book from '../components/Book';
+import NavigationButtons from '../components/NavigationButtons';
 
 export async function getServerSideProps() {
   try {
@@ -34,40 +36,13 @@ export default function Home({ book }: { book: { story: string, image: string }[
   }
 
   if (loading) {
-    return (
-      <div className="flex justify-center items-center">
-        <div className="animate-bounce h-12 w-12 bg-purple-500">
-          making book...
-        </div>
-      </div>
-    )
+    return <Loading />
   }
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <div className="flex items-center">
-        <button
-          className="mx-2 py-2 px-4 bg-blue-500 text-white rounded"
-          onClick={handleBackClick}
-        >
-          &#8592; {/* Left arrow symbol */}
-        </button>
-        <Image
-          src={book[currentIndex].image}
-          alt="book illustration"
-          width={600}
-          height={400}
-        />
-        <button
-          className="mx-2 py-2 px-4 bg-blue-500 text-white rounded"
-          onClick={handleNextClick}
-        >
-          &#8594; {/* Right arrow symbol */}
-        </button>
-      </div>
-      <h2 className="text-4xl text-center font-bold text-blue-500 mt-8">
-        {book[currentIndex].story}.
-      </h2>
+      <NavigationButtons handleBackClick={handleBackClick} handleNextClick={handleNextClick} />
+      <Book book={book} currentIndex={currentIndex} />
     </div>
   );
 } 
