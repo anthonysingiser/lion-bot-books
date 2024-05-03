@@ -26,12 +26,12 @@ export default function Home({ book }: { book: { story: string, image: string }[
 
   const handleNextClick = () => {
     if (currentIndex < book.length - 1) {
-      setCurrentIndex(currentIndex + 1);
+      setCurrentIndex(prevIndex => prevIndex + 1);
     }
   }
   const handleBackClick = () => {
     if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1);
+      setCurrentIndex(prevIndex => prevIndex - 1);
     }
   }
 
