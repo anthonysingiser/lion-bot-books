@@ -48,3 +48,13 @@ export default function Home({ book }: { book: { story: string, image: string }[
     </div>
   );
 } 
+
+// **align image to text, so that it is not jumping back and forth
+
+// **get loading component to display while book is being fetched
+
+// **fix long times on book images being first displayed
+
+// **add selection of animal / words
+
+// **add lists of words, not just one set 
