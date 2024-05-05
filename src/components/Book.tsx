@@ -14,9 +14,9 @@ export default function Book({ book, currentIndex }: BookProps) {
         width={600}
         height={400}
       />
-      <h2 className="text-4xl text-center font-bold text-blue-500 mt-8">
-        {book[currentIndex].story}.
-      </h2>
+ <h2 className="text-4xl text-center font-bold text-blue-500 mt-8">
+  {book[currentIndex]?.story && book[currentIndex].story.trim() !== "" ? book[currentIndex].story : "THE END"}.
+</h2>
     </div>
   );
 }
