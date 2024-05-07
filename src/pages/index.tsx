@@ -14,26 +14,41 @@ export async function getServerSideProps() {
   }
 }
 
-export default function Home({ book }: { book: { story: string, image: string }[] }) {
+// Extract the book type into its own type for reusability and clarity
+type BookType = { story: string, image: string };
+
+// Use this type in the Home component props
+type HomeProps = { book: BookType[] };
+
+export default function Home({ book }: HomeProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [loading, setLoading] = useState(true);
+
+  // Use the presence of 'book' to set the initial loading state
+  const [loading, setLoading] = useState(!book);
 
   useEffect(() => {
+    // If 'book' is present, set loading to false
     if (book) {
       setLoading(false);
     }
   }, [book]);
 
-  const handleNextClick = () => {
-    if (currentIndex < book.length - 1) {
-      setCurrentIndex(prevIndex => prevIndex + 1);
-    }
-  }
-  const handleBackClick = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex(prevIndex => prevIndex - 1);
-    }
-  }
+  // Create a general function to handle index changes
+  const handleIndexChange = (change: number) => {
+    setCurrentIndex((prevIndex) => {
+      const newIndex = prevIndex + change;
+      // Ensure the new index is within the valid range
+      if (newIndex >= 0 && newIndex < book.length) {
+        return newIndex;
+      }
+      // If not, return the previous index
+      return prevIndex;
+    });
+  };
+
+  // Use the general function for next and back clicks
+  const handleNextClick = () => handleIndexChange(1);
+  const handleBackClick = () => handleIndexChange(-1);
 
   if (loading) {
     return <Loading />
@@ -45,4 +60,4 @@ export default function Home({ book }: { book: { story: string, image: string }[
       <Book book={book} currentIndex={currentIndex} />
     </div>
   );
-} 
+}
