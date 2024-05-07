@@ -55,9 +55,11 @@ export default function Home({ book }: HomeProps) {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-200">
+      <div className="pb-4">
+        <Book book={book} currentIndex={currentIndex} />
+      </div>
       <NavigationButtons handleBackClick={handleBackClick} handleNextClick={handleNextClick} />
-      <Book book={book} currentIndex={currentIndex} />
     </div>
   );
 }
