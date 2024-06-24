@@ -51,6 +51,8 @@ export default function Home({ book }: HomeProps) {
   const handleNextClick = useCallback(() => handleIndexChange(1), [handleIndexChange]);
   const handleBackClick = useCallback(() => handleIndexChange(-1), [handleIndexChange]);
 
+  const progress = ((currentIndex + 1) / book.length) * 100;
+
   if (loading) {
     return <Loading />
   }
@@ -60,7 +62,11 @@ export default function Home({ book }: HomeProps) {
       <div className="pb-4">
         <Book book={book} currentIndex={currentIndex} />
       </div>
-      <NavigationButtons handleBackClick={handleBackClick} handleNextClick={handleNextClick} />
+      <NavigationButtons 
+        handleBackClick={handleBackClick} 
+        handleNextClick={handleNextClick}
+        progress={progress}
+      />
     </div>
   );
 }

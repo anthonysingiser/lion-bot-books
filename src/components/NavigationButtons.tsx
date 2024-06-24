@@ -1,9 +1,10 @@
 type NavigationButtonsProps = {
     handleBackClick: () => void;
     handleNextClick: () => void;
+    progress: number;
   };
 
-export default function NavigationButtons({ handleBackClick, handleNextClick }: NavigationButtonsProps) {
+export default function NavigationButtons({ handleBackClick, handleNextClick, progress }: NavigationButtonsProps) {
     return (
       <div className="flex items-center">
         <button
@@ -18,6 +19,7 @@ export default function NavigationButtons({ handleBackClick, handleNextClick }: 
         >
           &#8594; {/* Right arrow symbol */}
         </button>
+        <p>{progress}% completed</p>
       </div>
     );
   }
