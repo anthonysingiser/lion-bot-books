@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import createBook from '../utils/api';
 import Loading from '../components/Loading';
 import Book from '../components/Book';
@@ -34,7 +35,7 @@ export default function Home({ book }: HomeProps) {
   }, [book]);
 
   // Create a general function to handle index changes
-  const handleIndexChange = (change: number) => {
+  const handleIndexChange = useCallback((change: number) => {
     setCurrentIndex((prevIndex) => {
       const newIndex = prevIndex + change;
       // Ensure the new index is within the valid range
@@ -44,11 +45,11 @@ export default function Home({ book }: HomeProps) {
       // If not, return the previous index
       return prevIndex;
     });
-  };
+  }, [book.length]);
 
   // Use the general function for next and back clicks
-  const handleNextClick = () => handleIndexChange(1);
-  const handleBackClick = () => handleIndexChange(-1);
+  const handleNextClick = useCallback(() => handleIndexChange(1), [handleIndexChange]);
+  const handleBackClick = useCallback(() => handleIndexChange(-1), [handleIndexChange]);
 
   if (loading) {
     return <Loading />
