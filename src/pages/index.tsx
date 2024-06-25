@@ -26,37 +26,52 @@ export default function Home({ book }: HomeProps) {
 
   // Use the presence of 'book' to set the initial loading state
   const [loading, setLoading] = useState(!book);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // If 'book' is present, set loading to false
     if (book) {
       setLoading(false);
     }
   }, [book]);
-
+  
   // Create a general function to handle index changes
   const handleIndexChange = useCallback((change: number) => {
-    setCurrentIndex((prevIndex) => {
-      const newIndex = prevIndex + change;
-      // Ensure the new index is within the valid range
-      if (newIndex >= 0 && newIndex < book.length) {
-        return newIndex;
+    try {
+      // Check if book is in the expected format
+      if (!Array.isArray(book) || book.length === 0) {
+        throw new Error("Book is not in the expected format or is empty.");
       }
-      // If not, return the previous index
-      return prevIndex;
-    });
-  }, [book.length]);
-
+  
+      setCurrentIndex((prevIndex) => {
+        const newIndex = prevIndex + change;
+        // Ensure the new index is within the valid range
+        if (newIndex >= 0 && newIndex < book.length) {
+          return newIndex;
+        }
+        // If not, return the previous index
+        return prevIndex;
+      });
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message);
+      }
+    }
+  }, [book]);
+  
   // Use the general function for next and back clicks
   const handleNextClick = useCallback(() => handleIndexChange(1), [handleIndexChange]);
   const handleBackClick = useCallback(() => handleIndexChange(-1), [handleIndexChange]);
-
+  
   const progress = ((currentIndex + 1) / book.length) * 100;
-
+  
   if (loading) {
     return <Loading />
   }
-
+  
+  if (error) {
+    return <div className="error">{error}</div>;
+  }
+  
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-200">
       <div className="pb-4">
@@ -69,4 +84,3 @@ export default function Home({ book }: HomeProps) {
       />
     </div>
   );
-}
