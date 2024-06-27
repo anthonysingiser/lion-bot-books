@@ -38,7 +38,7 @@ export default function Home({ book }: HomeProps) {
   const handleIndexChange = useCallback((change: number) => {
     try {
       // Check if book is in the expected format
-      if (!Array.isArray(book) || book.length === 0) {
+      if (!Array.isArray(book) || book.length === 0 || typeof(book) === 'undefined') {
         throw new Error("Book is not in the expected format or is empty.");
       }
   
@@ -62,7 +62,7 @@ export default function Home({ book }: HomeProps) {
   const handleNextClick = useCallback(() => handleIndexChange(1), [handleIndexChange]);
   const handleBackClick = useCallback(() => handleIndexChange(-1), [handleIndexChange]);
   
-  const progress = ((currentIndex + 1) / book.length) * 100;
+  const progress = Math.floor(((currentIndex + 1) / book.length) * 100);
   
   if (loading) {
     return <Loading />
@@ -83,4 +83,4 @@ export default function Home({ book }: HomeProps) {
         progress={progress}
       />
     </div>
-  );
+  )};
