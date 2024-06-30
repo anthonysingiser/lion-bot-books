@@ -1,4 +1,6 @@
 import Image from 'next/image';
+import { useState } from 'react';
+
 
 interface BookProps {
     book: { 
@@ -10,14 +12,20 @@ interface BookProps {
 
 export default function Book({ book, currentIndex }: BookProps) {
   const currentBook = book[currentIndex];
+  const [isLoading, setIsLoading] = useState(true)
 
   if (!currentBook) {
     return <div>Book content is not available.</div>;
   }
 
+  const handleImageLoad = () => {
+    setIsLoading(false); // Set loading to false when image is loaded
+  };
+
   return (
     <div className= "flex flex-col items-center">
       <div className="flex justify-center w-full">
+      {isLoading && <div>Loading image...</div>}
         <Image
           src={book[currentIndex].image}
           alt="book illustration"
