@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react';
-import React, { useCallback } from 'react';
+import React,{ useState, useEffect, useCallback } from 'react';
 import createBook from '../utils/api';
 import Loading from '../components/Loading';
 import Book from '../components/Book';
@@ -34,7 +33,7 @@ export default function Home({ book }: HomeProps) {
     }
   }, [book]);
   
-  // Create a general function to handle index changes
+  // a general function to handle index changes
   const handleIndexChange = useCallback((change: number) => {
     try {
       // Check if book is in the expected format
@@ -58,7 +57,7 @@ export default function Home({ book }: HomeProps) {
     }
   }, [book]);
   
-  // Use the general function for next and back clicks
+  // general functions for next and back clicks
   const handleNextClick = useCallback(() => handleIndexChange(1), [handleIndexChange]);
   const handleBackClick = useCallback(() => handleIndexChange(-1), [handleIndexChange]);
   
