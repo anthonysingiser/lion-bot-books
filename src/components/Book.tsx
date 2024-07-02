@@ -31,6 +31,7 @@ export default function Book({ book, currentIndex }: BookProps) {
           alt="book illustration"
           width={600}
           height={400}
+          onLoad={handleImageLoad}
         />
       </div>
  <h2 className="text-4xl text-center font-bold text-blue-500 mt-8">
