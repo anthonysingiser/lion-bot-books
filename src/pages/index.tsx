@@ -35,7 +35,6 @@ export default function Home() {
       if (!Array.isArray(book) || book.length === 0) {
         throw new Error("Book is not in the expected format or is empty.");
       }
-
       setCurrentIndex((prevIndex) => {
         const newIndex = prevIndex + change;
         if (newIndex >= 0 && newIndex < book.length) {
