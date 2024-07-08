@@ -1,11 +1,11 @@
 import {openai} from '../projectKey';
-import {animals, firstTenFryWords} from '../data';
+import {animals, firstFiveFryWords} from '../data';
 
 const mainCharacter = animals[Math.floor(Math.random() * animals.length)]
 
 async function createStory(choiceWords: string[], mainCharacter: string): Promise<string>{
   const response = await openai.chat.completions.create({
-    messages: [{ role: 'user', content: `create ten sentences that use these words:${choiceWords}. make the sentences primarily made from these words. each sentence will be slight variations on the first sentence generated. The sentences together will tell a story focusing on the thoughts and feelings of a ${mainCharacter}. The story needs a central conflict, that is resolved by the end.`}],
+    messages: [{ role: 'user', content: `create ten sentences that use these words:${choiceWords}. make the sentences primarily made from these words. The sentences together will tell a story focusing on the thoughts and feelings of a ${mainCharacter}. The story needs a central conflict, that is resolved by the end.`}],
     model: 'gpt-3.5-turbo',
   });
 
@@ -25,7 +25,7 @@ async function generateImage(prompt: string, animal: string): Promise<string> {
 
   const image = await openai.images.generate({
       model: "dall-e-3", 
-      prompt: `${prompt} in a hand-drawn style with muted primary and secondary colors. The main character of the image is a ${animal}`,
+      prompt: `${prompt} in a hand-drawn style with soft primary and secondary colors. The main character of the image is a ${animal}. There are no words or letters in the images.`,
   });
 
   if (image.data[0]?.url) {
@@ -38,7 +38,7 @@ async function generateImage(prompt: string, animal: string): Promise<string> {
 export default async function createBook(): Promise<{story: string, image: string}[]> {
   try {
     let storyArray: string[] = [];
-    const story = await createStory(firstTenFryWords, mainCharacter);
+    const story = await createStory(firstFiveFryWords, mainCharacter);
     storyArray = story.split('.').filter((sentence) => {
       return !/[0-9\n]/.test(sentence);
     });
