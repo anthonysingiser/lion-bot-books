@@ -5,7 +5,7 @@ const mainCharacter = animals[Math.floor(Math.random() * animals.length)]
 
 async function createStory(choiceWords: string[], mainCharacter: string): Promise<string>{
   const response = await openai.chat.completions.create({
-    messages: [{ role: 'user', content: `create ten sentences that use these words:${choiceWords}. make the sentences primarily made from these words. The sentences together will tell a story focusing on the thoughts and feelings of a ${mainCharacter}. The story needs a central conflict, that is resolved by the end.`}],
+    messages: [{ role: 'user', content: `create ten sentences that use these words:${choiceWords}. Make the sentences primarily made from these words. The sentences together will tell a story focusing on the thoughts and feelings of a ${mainCharacter}. The story needs a central conflict, that is resolved by the end.`}],
     model: 'gpt-3.5-turbo',
   });
 
@@ -25,7 +25,7 @@ async function generateImage(prompt: string, animal: string): Promise<string> {
 
   const image = await openai.images.generate({
       model: "dall-e-3", 
-      prompt: `Draw an image of the following sentence "${prompt}" in a style with bold lines and soft colors. The main character of the image is a ${animal}.`,
+      prompt: `Draw an image of what the following sentence in quotes describes: "${prompt}". Draw the image in a style with bold lines and soft colors. The main character of the image is a ${animal}.`,
   });
 
   if (image.data[0]?.url) {
