@@ -5,7 +5,7 @@ const mainCharacter = animals[Math.floor(Math.random() * animals.length)]
 
 async function createStory(choiceWords: string[], mainCharacter: string): Promise<string>{
   const response = await openai.chat.completions.create({
-    messages: [{ role: 'user', content: `create ten sentences that use these words:${choiceWords}. Make the sentences primarily made from these words. Each sentence will end with a period. Together they will tell a story focusing on the thoughts and feelings of a ${mainCharacter}. The story needs a central conflict outside of the main character that is resolved by the end of the story. The story needs a positive moral or lesson that isn't spelled out.`}],
+    messages: [{ role: 'user', content: `create ten sentences that use these words:${choiceWords}. Make the sentences primarily made from these words. Each sentence will end with a period. Together they will tell a story focusing on the thoughts and feelings of a ${mainCharacter}. The story needs a central conflict outside of the main character that is resolved by the end of the story. The story needs a good moral or lesson.`}],
     model: 'gpt-3.5-turbo',
   });
 
@@ -25,7 +25,7 @@ async function generateImage(prompt: string, animal: string): Promise<string> {
 
   const image = await openai.images.generate({
       model: "dall-e-3", 
-      prompt: `Draw an image of what the following sentence in quotes describes: "${prompt}". The main character of the image is a ${animal}.The image should be in an art style fitting the sentece. Do not include the text, or any text, in the image you generate.`,
+      prompt: `Draw an image depicting what the following sentence in quotes describes: "${prompt}". The main character of the image is a ${animal}.Use a fun style. Do not include the text, or any text, in the image you generate.`,
   });
 
   if (image.data[0]?.url) {
@@ -40,7 +40,7 @@ export default async function createBook(): Promise<{story: string, image: strin
     let storyArray: string[] = [];
     const story = await createStory(firstFiveFryWords, mainCharacter);
     storyArray = story.split('.').filter((sentence) => {
-      return !/[0-9\n]/.test(sentence);
+      return sentence.replace(/[0-9]/g, '');
     });
 
     const book = [];

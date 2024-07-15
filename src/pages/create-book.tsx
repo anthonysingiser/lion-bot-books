@@ -24,11 +24,11 @@ export default function Home({ book }: HomeProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   // Use the presence of 'book' to set the initial loading state
-  const [loading, setLoading] = useState(!book);
+  const [loading, setLoading] = useState(!book.length);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (book) {
+    if (book.length > 0) {
       setLoading(false);
     }
   }, [book]);
