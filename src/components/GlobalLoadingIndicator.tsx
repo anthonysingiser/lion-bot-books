@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 
 const GlobalLoadingIndicator = () => {
   const [loading, setLoading] = useState(false);
+  const [progress, setProgress] = useState(0);
   const router = useRouter();
 
   useEffect(() => {
@@ -26,7 +27,7 @@ const GlobalLoadingIndicator = () => {
 
   return (
     <div className="loading-indicator">
-      <Loading />
+      <Loading progress={20}/>
     </div>
   );
 };

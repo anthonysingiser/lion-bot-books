@@ -16,7 +16,7 @@ async function createStory(choiceWords: string[], mainCharacter: string): Promis
   }
 }
 
-function delay(ms: number) {
+export function delay(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
