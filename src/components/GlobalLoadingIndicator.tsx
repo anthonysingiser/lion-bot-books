@@ -8,9 +8,26 @@ const GlobalLoadingIndicator = () => {
   const [progress, setProgress] = useState(0);
   const router = useRouter();
 
+  function delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+
   useEffect(() => {
     const handleStart = (url: string) => (url !== router.asPath) && setLoading(true);
-    const handleComplete = () => setLoading(false);
+    setProgress(0);
+    const interval = setInterval(async () => {
+      if (progress < 100) {
+        await delay(12000);
+        setProgress((prev) => prevProgress + 10);
+      } else {
+        clearInterval(interval);
+      }
+    }, 12000)
+    const handleComplete = () => {
+      setLoading(false);
+      setProgress(100);
+    };
 
     router.events.on('routeChangeStart', handleStart);
     router.events.on('routeChangeComplete', handleComplete);
@@ -27,7 +44,7 @@ const GlobalLoadingIndicator = () => {
 
   return (
     <div className="loading-indicator">
-      <Loading progress={20}/>
+      <Loading progress={progress}/>
     </div>
   );
 };
