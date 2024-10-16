@@ -1,4 +1,3 @@
-// components/GlobalLoadingIndicator.tsx
 import React, { useEffect, useState } from 'react';
 import Loading from './Loading';
 import { useRouter } from 'next/router';
@@ -19,7 +18,7 @@ const GlobalLoadingIndicator = () => {
     const interval = setInterval(async () => {
       if (progress < 100) {
         await delay(12000);
-        setProgress((prev) => prevProgress + 10);
+        setProgress((prev) => prev + 10);
       } else {
         clearInterval(interval);
       }
